@@ -1,6 +1,5 @@
 ---
 version: "3.4"
-
 services:
   prd-ntp-server-app:
     image: docker-registry.theautomation.nl/coen/prd-ntp-server-app
@@ -11,17 +10,16 @@ services:
       - 123:123/udp
     read_only: true
     networks:
-      home-services:
+      - ntp-server
     tmpfs:
       - /etc/chrony:rw,mode=1750
       - /run/chrony:rw,mode=1750
       - /var/lib/chrony:rw,mode=1750
 
-# NETWORKS
 networks:
-  home-services:
+  ntp-server:
+    name: ntp-server
     driver: bridge
-    name: home-services
     ipam:
       config:
-        - subnet: 172.20.0.0/16
+        - subnet: 172.28.0.0/16
